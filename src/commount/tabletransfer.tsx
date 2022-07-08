@@ -36,6 +36,9 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }:any) =>{
                             rowSelection={rowSelection}
                             columns={columns}
                             dataSource={filteredItems}
+                            size="small"
+                            sticky={true}
+                            scroll={{ y: 300 }}
                         />
                     );
                 }}
