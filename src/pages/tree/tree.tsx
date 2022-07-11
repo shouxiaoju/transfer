@@ -1,5 +1,5 @@
 import { EditOutlined, MinusCircleOutlined,PlusCircleOutlined,UpCircleOutlined,DownCircleOutlined } from '@ant-design/icons';
-import { Tree,Input,Tabs,Space } from 'antd';
+import { Tree,Input,Tabs,Space,Popconfirm } from 'antd';
 import type { DataNode } from 'antd/lib/tree';
 import React, { useState,useMemo } from 'react';
 import './tree.less'
@@ -46,8 +46,8 @@ const Treedata = () => {
               key: '1-0',
               parent:"1",
               children: [
-                { title: 'leaf', key: '1-0-0',parent:"1-0-0"  },
-                { title: 'leaf', key: '1-0-1', parent:"1-0-1" },
+                { title: 'leaf', key: '1-0-0',parent:"1-0"  },
+                { title: 'leaf', key: '1-0-1', parent:"1-0" },
               ],
             },
           ],
@@ -220,6 +220,7 @@ const Treedata = () => {
             if (cityData[i].key == id) {
                 let arr
                 let newarr=[...cityData]
+                let partname
                 for(let i = 0; i < cityData.length; i++){
                     if(doentype=="下移"){
                         if(cityData[i].key==id){
@@ -233,19 +234,35 @@ const Treedata = () => {
                             newarr[i]=newarr[i-1]
                             newarr[i-1]=arr
                         }
+                    }else if(doentype=="删除"){
+                        
+                        
+                        if(cityData[i].key==id){
+                            partname=newarr[0].parent
+                            console.log("删除当前数据",newarr);
+                            newarr.splice(i,1)
+                        }
                     }
                 }
                 console.log("当前数据",newarr);
                 let newtrredata:any=[...treeData]
-                if(newarr[0].parent){
-                    moveuodown(newtrredata,newarr,newarr[0].parent)
-                    console.log("newtrredata",newtrredata);
-                    setTreeData(newtrredata)
-                    find(treeData, id,"key")
+                if(newarr.length>0){
+                    if(newarr[0].parent){
+                        moveuodown(newtrredata,newarr,newarr[0].parent)
+                        console.log("newtrredata",newtrredata);
+                        setTreeData(newtrredata)
+                        find(treeData, id,"key")
+                    }else{
+                        setTreeData(newarr)
+                        find(newarr, id,"key")
+                    } 
                 }else{
-                    setTreeData(newarr)
-                    find(newarr, id,"key")
-                } 
+                        moveuodown(newtrredata,newarr,partname)
+                        console.log("newtrredata",newtrredata);
+                        setTreeData(newtrredata)
+                        find(treeData, id,"key")
+                }
+                
             }
 
             if (cityData[i].children && cityData[i].children.length > 0) {
@@ -300,7 +317,9 @@ const Treedata = () => {
                                 <div style={{height:"24px",display:`${defaultkey.includes(nodeData.key)?"block":"none"}`,marginLeft:"20px"}}>
                                     <Space size={8}>
                                         <EditOutlined />
-                                        <MinusCircleOutlined />
+                                        <Popconfirm title="确定要删除该组织架构吗？" okText="确定" cancelText="取消" onConfirm={()=>{downdata(nodeData,"删除")}}>
+                                            <MinusCircleOutlined  />
+                                        </Popconfirm>
                                         <PlusCircleOutlined />
                                         <UpCircleOutlined style={{display:`${status1?"block":"none"}`}} onClick={()=>{downdata(nodeData,"上移")}} />
                                         <DownCircleOutlined style={{display:`${status2?"block":"none"}`}} onClick={()=>{downdata(nodeData,"下移")}}/>
