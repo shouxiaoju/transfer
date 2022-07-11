@@ -4,6 +4,8 @@ import React,{useRef} from 'react';
 import Tran from './transfer/transfer';
 import './index.less'
 import Treedata from './tree/tree';
+import Ceshi from './ceshi/ceshi';
+
 const { TabPane } = Tabs;
 const { Option } = Select;
 export default function IndexPage() {
@@ -66,7 +68,7 @@ export default function IndexPage() {
             </Tabs>
         </TabPane>
         <TabPane tab="Tab 3" key="3">
-          Content of Tab Pane 3
+          <Ceshi/>
         </TabPane>
     </Tabs>
     </div>
