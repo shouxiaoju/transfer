@@ -6,6 +6,7 @@ import './index.less'
 import Treedata from './tree/tree';
 import Ceshi from './ceshi/ceshi';
 import Timer from './timer/time';
+import Keyindex from './index/keyindex';
 const { TabPane } = Tabs;
 const { Option } = Select;
 export default function IndexPage() {
@@ -63,7 +64,7 @@ export default function IndexPage() {
               <Timer/>
               </TabPane>
               <TabPane tab="Tab 3" key="3">
-                Content of Tab 3
+                <Keyindex/>
               </TabPane>
             </Tabs>
         </TabPane>
