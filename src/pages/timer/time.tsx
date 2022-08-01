@@ -89,12 +89,26 @@ const Timer=()=>{
         },1000)
         return ()=>clearTimeout(timer)
     },[num])
+
+    const [obj,setObj]=useState({name:"Bob"})
+    const refobj:any=useRef()
+    useEffect(()=>{
+       let timer= window.setInterval(()=>{
+            console.log(refobj.current);
+            
+        },2000)
+       return clearInterval(timer)
+    },[])
+    useEffect(()=>{
+        refobj.current=obj
+    },[obj])
     return (
         <div>
             值：{num}
             <button onClick={add}>点击生产延时器</button>
             <button onClick={add1}>点击</button>
             <button onClick={shake}>防抖</button>
+            <button onClick={()=>{setObj({name:"world"})}}>改变</button>
         </div>
     )
 }

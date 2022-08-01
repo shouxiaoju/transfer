@@ -54,7 +54,6 @@ export default function IndexPage() {
                           <Option  value="lucy">Lucy</Option>
                         </Select>
                       </Col>
-                      
                     </Row>
                   </div>
                 </div>
